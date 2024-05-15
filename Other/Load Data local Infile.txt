@@ -1,0 +1,3 @@
+Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Recordings.txt' into table video.Video_Recordings fields terminated by '\t' lines terminated by '\n' IGNORE 1 LINES;
+
+Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Recordings.txt' into table video.Video_Recordings FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n' CHARACTER SET latin1;

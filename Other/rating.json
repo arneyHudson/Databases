@@ -1,0 +1,18 @@
+[
+	{
+		"Name" : "R",
+		"Rating_ID" : 1
+	},
+	{
+		"Name" : "PG-13",
+		"Rating_ID" : 2
+	},
+	{
+		"Name" : "PG",
+		"Rating_ID" : 3
+	},
+	{
+		"Name" : "NR",
+		"Rating_ID" : 4
+	}
+]

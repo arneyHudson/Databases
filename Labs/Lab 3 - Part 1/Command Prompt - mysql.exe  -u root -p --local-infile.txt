@@ -1,0 +1,1452 @@
+Microsoft Windows [Version 10.0.22621.3007]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\arneyh>mysql
+'mysql' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\arneyh>sql
+'sql' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\arneyh>mysql.exe
+'mysql.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\arneyh>cd "C:\\Program Files\MySQL\MySQL Server 8.0\bin"
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql.exe -u root -p --local-infile
+Enter password: *****************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SET GLOBAL local_infile = 1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| genomics           |
+| information_schema |
+| mysql              |
+| notes              |
+| performance_schema |
+| sys                |
+| video              |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> USE video;
+Database changed
+mysql> CREATE DATABASE video;
+ERROR 1007 (HY000): Can't create database 'video'; database exists
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| genomics           |
+| information_schema |
+| mysql              |
+| notes              |
+| performance_schema |
+| sys                |
+| video              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT @@GLOBAL.local_infile;
++-----------------------+
+| @@GLOBAL.local_infile |
++-----------------------+
+|                     1 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SET GLOBAL local_infile = 1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Recordings.txt' into table video.Video_Recordings fields terminated by '\t' lines terminated by '\n' IGNORE 1 LINES;
+ERROR 1146 (42S02): Table 'video.video_recordings' doesn't exist
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Recordings.txt' into table Video_Recordings fields terminated by '\t' lines terminated by '\n' IGNORE 1 LINES;
+ERROR 1146 (42S02): Table 'video.video_recordings' doesn't exist
+mysql> SHOW TABLES;
+Empty set (0.00 sec)
+
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Recordings.txt' into table video.Video_Recordings fields terminated by '\t' lines terminated by '\n' IGNORE 1 LINES;
+ERROR 1146 (42S02): Table 'video.video_recordings' doesn't exist
+mysql> SET GLOBAL local_infile = 1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW TABLES;
+Empty set (0.00 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_video  |
++------------------+
+| video_actors     |
+| video_categories |
+| video_recordings |
++------------------+
+3 rows in set (0.00 sec)
+
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Recordings.txt' into table video.Video_Recordings fields terminated by '\t' lines terminated by '\n';
+Query OK, 55 rows affected, 55 warnings (0.02 sec)
+Records: 55  Deleted: 0  Skipped: 0  Warnings: 55
+
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Categories.txt' into table video.Video_Categories fields terminated by '\t' lines terminated by '\n';
+Query OK, 6 rows affected (0.02 sec)
+Records: 6  Deleted: 0  Skipped: 0  Warnings: 0
+
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Actors.txt' into table video.Video_Actors fields terminated by '\t' lines terminated by '\n';
+Query OK, 335 rows affected, 38 warnings (0.02 sec)
+Records: 372  Deleted: 0  Skipped: 37  Warnings: 38
+
+mysql> SELECT * FROM video.Video_Recordings;
++--------------+------------------------+-----------------------------------+----------------------+-------------------------------+----------+--------+---------------+-------+-------------+
+| recording_id | director               | title                             | category             | image_name
+           | duration | rating | year_released | price | stock_count |
++--------------+------------------------+-----------------------------------+----------------------+-------------------------------+----------+--------+---------------+-------+-------------+
+|         3038 | "Ridley Scott"         | "Alien"                           | "Science Fiction"    | "alien.gif"  |     6960 |      0 |          1979 | 19.99 |         800 |
+|         3000 | "Francis Ford Coppola" | "Apocalypse Now"                  | "Action & Adventure" | "apocalypse_now.gif"  |     9180 |      0 |          1979 | 22.99 |           0 |
+|         3010 | "Jay Roach"            | "Austin Powers"                   | "Comedy"             | "austin_powers.gif"  |     5220 |      0 |          1997 | 17.99 |         688 |
+|         3001 | "Michael Bay"          | "Bad Boys"                        | "Action & Adventure" | "badboys.gif"
+           |     7140 |      0 |          1995 | 15.99 |         782 |
+|         3002 | "Mel Gibson"           | "Braveheart"                      | "Action & Adventure" | "braveheart.gif"  |    10620 |      0 |          1995 | 14.99 |         582 |
+|         3011 | "Harold Ramis"         | "Caddyshack"                      | "Comedy"             | "caddyshack.gif"  |     5880 |      0 |          1980 | 18.99 |         938 |
+|         3030 | "Bernard Rose"         | "Candyman"                        | "Horror"             | "candyman.gif"  |     5880 |      0 |          1992 | 15.99 |           0 |
+|         3012 | "Michael Schultz"      | "Car Wash"                        | "Comedy"             | "car_wash.gif"
+           |     5820 |      0 |          1976 | 24.99 |           0 |
+|         3031 | "Brian De Palmas"      | "Carrie"                          | "Horror"             | "carrie.gif"  |     5880 |      0 |          1976 | 15.99 |         855 |
+|         3039 | "Stanley Kubrick"      | "Clockwork Orange"                | "Science Fiction"    | "clockwork_orange.gif"  |     8220 |      0 |          1971 | 13.99 |         400 |
+|         3040 | "Robert Zemeckis"      | "Contact"                         | "Science Fiction"    | "contact.gif"  |     9000 |      0 |          1997 | 10.99 |         547 |
+|         3013 | "Spike Lee"            | "Crooklyn"                        | "Comedy"             | "crooklyn.gif"  |     6840 |      0 |          1994 |  9.99 |         651 |
+|         3003 | "Mimi Leder"           | "Deep Impact"                     | "Action & Adventure" | "deep_impact.gif"  |     5700 |      0 |          1998 | 11.99 |         501 |
+|         3047 | "Jeremiah Chechik"     | "Diabolique"                      | "Suspense"           | "diabolique.gif"  |     6480 |      0 |          1996 | 15.99 |         421 |
+|         3048 | "Barry Levinson"       | "Disclosure"                      | "Suspense"           | "disclosure.gif"  |     7740 |      0 |          1994 | 23.99 |           0 |
+|         3004 | "J. Robert Wagoner"    | "Disco Godfather"                 | "Action & Adventure" | "disco_godfather.gif"  |     5580 |      0 |          1993 | 10.99 |         872 |
+|         3014 | "D`Urville Martin"     | "Dolemite"                        | "Comedy"             | "dolemite.gif"  |     5460 |      0 |          1975 | 19.99 |         489 |
+|         3015 | "Peter Farrelly"       | "Dumb and Dumber"                 | "Comedy"             | "dumb_and_dumber.gif"  |     6600 |      0 |          1994 | 23.99 |         973 |
+|         3041 | "David Lynch"          | "Dune"                            | "Science Fiction"    | "dune.gif"
+           |     8220 |      0 |          1984 | 10.99 |         962 |
+|         3042 | "John Boorman"         | "Excalibur"                       | "Science Fiction"    | "excalibur.gif"  |     8400 |      0 |          1981 | 15.99 |           0 |
+|         3020 | "John Schlesinger"     | "Falcon and the Snowman"          | "Drama"              | "falcon_snowman.jpg"  |     7860 |      0 |          1985 | 10.99 |         995 |
+|         3021 | "Robert Zemeckis"      | "Forrest Gump"                    | "Drama"              | "forrest_gump.gif"  |     9420 |      0 |          1994 | 10.99 |         496 |
+|         3032 | "Sean S. Cunningham"   | "Friday the 13th Pt 1"            | "Horror"             | "friday_13th_part1.gif"  |     5760 |      0 |          1980 | 24.99 |         903 |
+|         3005 | "Stanley Kubrick"      | "Full Metal Jacket"               | "Action & Adventure" | "full_metal_jacket.gif"  |     7020 |      0 |          1987 | 16.99 |         872 |
+|         3022 | "Jerry Zucker"         | "Ghost"                           | "Drama"              | "ghost.gif"  |     7620 |      0 |          1990 | 12.99 |         828 |
+|         3023 | "Victor Fleming"       | "Gone With The Wind"              | "Drama"              | "gone_with_the_wind.gif"  |    13320 |      0 |          1939 | 23.99 |         915 |
+|         3024 | "Gus Van Sant"         | "Good Will Hunting"               | "Drama"              | "good_will_hunting.gif"  |     7560 |      0 |          1997 | 14.99 |           0 |
+|         3006 | "Roland Emmerich"      | "Independence Day"                | "Action & Adventure" | "independence_day.gif"  |     8700 |      0 |          1996 | 16.99 |           0 |
+|         3043 | "Steven Spielberg"     | "Jurassic Park"                   | "Science Fiction"    | "jurassic_park.gif"  |     7620 |      0 |          1993 | 20.99 |         806 |
+|         3049 | "Harold Becker"        | "Malice"                          | "Suspense"           | "malice.gif"  |     6360 |      0 |          1993 | 23.99 |         752 |
+|         3033 | "Rob Reiner"           | "Misery"                          | "Horror"             | "misery.gif"  |     6420 |      0 |          1990 | 22.99 |         612 |
+|         3016 | "Terry Gilliam"        | "Monty Python and The Holy Grail" | "Comedy"             | "monty_python_holy_grail.gif" |     5400 |      0 |          1975 | 17.99 |         980 |
+|         3017 | "Chris Columbus"       | "Mrs. Doubtfire"                  | "Comedy"             | "mrs_doubtfire.gif"  |     7500 |      0 |          1993 | 21.99 |         772 |
+|         3034 | "Mary Lambert"         | "Pet Sematary"                    | "Horror"             | "pet_sematary.gif"  |     6180 |      0 |          1989 | 13.99 |         887 |
+|         3025 | "John Singleton"       | "Poetic Justice"                  | "Drama"              | "poetic_justice.gif"  |     6540 |      0 |          1993 | 20.99 |         523 |
+|         3035 | "Tobe Hopper"          | "Poltergeist"                     | "Horror"             | "poltergeist.gif"  |     6900 |      0 |          1982 | 20.99 |         821 |
+|         3036 | "Alfred Hitchcock"     | "Psycho"                          | "Horror"             | "psycho.gif"  |     6540 |      0 |          1960 | 15.99 |           0 |
+|         3026 | "David Anspaugh"       | "Rudy"                            | "Drama"              | "rudy.gif"
+           |     6840 |      0 |          1993 | 15.99 |         658 |
+|         3037 | "Wes Craven"           | "Scream"                          | "Horror"             | "scream.gif"  |     6660 |      0 |          1996 | 22.99 |         692 |
+|         3050 | "David Fincher"        | "Seven"                           | "Suspense"           | "seven.gif"  |     7620 |      0 |          1995 | 14.99 |         421 |
+|         3027 | "Frank Darabont"       | "Shawshank Redemption"            | "Drama"              | "shawshank_redemption.gif"  |     8520 |      0 |          1994 | 20.99 |         529 |
+|         3028 | "George Tillman"       | "Soul Food"                       | "Drama"              | "soul_food.gif"  |     6840 |      0 |          1997 | 11.99 |         687 |
+|         3044 | "Johnathan Frakes"     | "Star Trek: First Contact"        | "Science Fiction"    | "star_trek_first_contact.gif" |     6660 |      0 |          1996 | 11.99 |         593 |
+|         3045 | "George Lucas"         | "Star Wars"                       | "Science Fiction"    | "star_wars.gif"  |     7260 |      0 |          1977 | 13.99 |         720 |
+|         3018 | "John Landis"          | "The Blues Brothers"              | "Comedy"             | "blues_brothers.gif"  |     9180 |      0 |          1980 | 14.99 |           0 |
+|         3051 | "Sydney Pollack"       | "The Firm"                        | "Suspense"           | "the_firm.gif"  |     9240 |      0 |          1993 | 17.99 |         655 |
+|         3052 | "David Fincher"        | "The Game"                        | "Suspense"           | "the_game.gif"  |     6900 |      0 |          1997 | 21.99 |         581 |
+|         3007 | "John McTiernan"       | "The Hunt for Red October"        | "Action & Adventure" | "hunt_for_red_october.gif"  |     8100 |      0 |          1990 | 10.99 |         618 |
+|         3019 | "Tom Shadyac"          | "The Nutty Professor"             | "Comedy"             | "nutty_professor.gif"  |     5700 |      0 |          1996 | 19.99 |         925 |
+|         3008 | "Michael Bay"          | "The Rock"                        | "Action & Adventure" | "the_rock.gif"  |     8160 |      0 |          1996 | 20.99 |         514 |
+|         3053 | "Jonathan Demme"       | "The Silence of the Lambs"        | "Suspense"           | "silence_of_the_lambs.gif"  |     7080 |      0 |          1991 | 22.99 |         817 |
+|         3054 | "Bryan Singer"         | "The Usual Suspects"              | "Suspense"           | "usual_suspects.gif"  |     6360 |      0 |          1995 | 23.99 |           0 |
+|         3029 | "James Cameron"        | "Titanic"                         | "Drama"              | "titanic.gif"  |    11640 |      0 |          1997 | 22.99 |         917 |
+|         3009 | "Tony Scott"           | "Top Gun"                         | "Action & Adventure" | "top_gun.gif"  |     6600 |      0 |          1986 | 11.99 |         499 |
+|         3046 | "Steven Lisberger"     | "Tron"                            | "Science Fiction"    | "tron.gif"
+           |     5700 |      0 |          1982 | 12.99 |         653 |
++--------------+------------------------+-----------------------------------+----------------------+-------------------------------+----------+--------+---------------+-------+-------------+
+55 rows in set (0.00 sec)
+
+mysql>
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Recordings.txt' into table video.Video_Recordings FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+Query OK, 55 rows affected, 55 warnings (0.02 sec)
+Records: 55  Deleted: 0  Skipped: 0  Warnings: 55
+
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Categories.txt' into table video.Video_Categories FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+Query OK, 6 rows affected (0.02 sec)
+Records: 6  Deleted: 0  Skipped: 0  Warnings: 0
+
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Actors.txt' into table video.Video_Actors FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n' CHARACTER SET latin1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for theright syntax to use near 'CHARACTER SET latin1' at line 1
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Actors.txt' into table video.Video_Actors CHARACTER SET latin1 FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+Query OK, 335 rows affected, 37 warnings (0.02 sec)
+Records: 372  Deleted: 0  Skipped: 37  Warnings: 37
+
+mysql> SELECT * FROM video.Video_Recordings;
++--------------+----------------------+---------------------------------+--------------------+-----------------------------+----------+--------+---------------+-------+-------------+
+| recording_id | director             | title                           | category           | image_name
+   | duration | rating | year_released | price | stock_count |
++--------------+----------------------+---------------------------------+--------------------+-----------------------------+----------+--------+---------------+-------+-------------+
+|         3038 | Ridley Scott         | Alien                           | Science Fiction    | alien.gif
+   |     6960 |      0 |          1979 | 19.99 |         800 |
+|         3000 | Francis Ford Coppola | Apocalypse Now                  | Action & Adventure | apocalypse_now.gif          |9180 |      0 |          1979 | 22.99 |           0 |
+|         3010 | Jay Roach            | Austin Powers                   | Comedy             | austin_powers.gif           |5220 |      0 |          1997 | 17.99 |         688 |
+|         3001 | Michael Bay          | Bad Boys                        | Action & Adventure | badboys.gif
+   |     7140 |      0 |          1995 | 15.99 |         782 |
+|         3002 | Mel Gibson           | Braveheart                      | Action & Adventure | braveheart.gif
+   |    10620 |      0 |          1995 | 14.99 |         582 |
+|         3011 | Harold Ramis         | Caddyshack                      | Comedy             | caddyshack.gif
+   |     5880 |      0 |          1980 | 18.99 |         938 |
+|         3030 | Bernard Rose         | Candyman                        | Horror             | candyman.gif
+   |     5880 |      0 |          1992 | 15.99 |           0 |
+|         3012 | Michael Schultz      | Car Wash                        | Comedy             | car_wash.gif
+   |     5820 |      0 |          1976 | 24.99 |           0 |
+|         3031 | Brian De Palmas      | Carrie                          | Horror             | carrie.gif
+   |     5880 |      0 |          1976 | 15.99 |         855 |
+|         3039 | Stanley Kubrick      | Clockwork Orange                | Science Fiction    | clockwork_orange.gif        |8220 |      0 |          1971 | 13.99 |         400 |
+|         3040 | Robert Zemeckis      | Contact                         | Science Fiction    | contact.gif
+   |     9000 |      0 |          1997 | 10.99 |         547 |
+|         3013 | Spike Lee            | Crooklyn                        | Comedy             | crooklyn.gif
+   |     6840 |      0 |          1994 |  9.99 |         651 |
+|         3003 | Mimi Leder           | Deep Impact                     | Action & Adventure | deep_impact.gif
+   |     5700 |      0 |          1998 | 11.99 |         501 |
+|         3047 | Jeremiah Chechik     | Diabolique                      | Suspense           | diabolique.gif
+   |     6480 |      0 |          1996 | 15.99 |         421 |
+|         3048 | Barry Levinson       | Disclosure                      | Suspense           | disclosure.gif
+   |     7740 |      0 |          1994 | 23.99 |           0 |
+|         3004 | J. Robert Wagoner    | Disco Godfather                 | Action & Adventure | disco_godfather.gif         |5580 |      0 |          1993 | 10.99 |         872 |
+|         3014 | D`Urville Martin     | Dolemite                        | Comedy             | dolemite.gif
+   |     5460 |      0 |          1975 | 19.99 |         489 |
+|         3015 | Peter Farrelly       | Dumb and Dumber                 | Comedy             | dumb_and_dumber.gif         |6600 |      0 |          1994 | 23.99 |         973 |
+|         3041 | David Lynch          | Dune                            | Science Fiction    | dune.gif
+   |     8220 |      0 |          1984 | 10.99 |         962 |
+|         3042 | John Boorman         | Excalibur                       | Science Fiction    | excalibur.gif
+   |     8400 |      0 |          1981 | 15.99 |           0 |
+|         3020 | John Schlesinger     | Falcon and the Snowman          | Drama              | falcon_snowman.jpg          |7860 |      0 |          1985 | 10.99 |         995 |
+|         3021 | Robert Zemeckis      | Forrest Gump                    | Drama              | forrest_gump.gif
+   |     9420 |      0 |          1994 | 10.99 |         496 |
+|         3032 | Sean S. Cunningham   | Friday the 13th Pt 1            | Horror             | friday_13th_part1.gif       |5760 |      0 |          1980 | 24.99 |         903 |
+|         3005 | Stanley Kubrick      | Full Metal Jacket               | Action & Adventure | full_metal_jacket.gif       |7020 |      0 |          1987 | 16.99 |         872 |
+|         3022 | Jerry Zucker         | Ghost                           | Drama              | ghost.gif
+   |     7620 |      0 |          1990 | 12.99 |         828 |
+|         3023 | Victor Fleming       | Gone With The Wind              | Drama              | gone_with_the_wind.gif      |    13320 |      0 |          1939 | 23.99 |         915 |
+|         3024 | Gus Van Sant         | Good Will Hunting               | Drama              | good_will_hunting.gif       |7560 |      0 |          1997 | 14.99 |           0 |
+|         3006 | Roland Emmerich      | Independence Day                | Action & Adventure | independence_day.gif        |8700 |      0 |          1996 | 16.99 |           0 |
+|         3043 | Steven Spielberg     | Jurassic Park                   | Science Fiction    | jurassic_park.gif           |7620 |      0 |          1993 | 20.99 |         806 |
+|         3049 | Harold Becker        | Malice                          | Suspense           | malice.gif
+   |     6360 |      0 |          1993 | 23.99 |         752 |
+|         3033 | Rob Reiner           | Misery                          | Horror             | misery.gif
+   |     6420 |      0 |          1990 | 22.99 |         612 |
+|         3016 | Terry Gilliam        | Monty Python and The Holy Grail | Comedy             | monty_python_holy_grail.gif |5400 |      0 |          1975 | 17.99 |         980 |
+|         3017 | Chris Columbus       | Mrs. Doubtfire                  | Comedy             | mrs_doubtfire.gif           |7500 |      0 |          1993 | 21.99 |         772 |
+|         3034 | Mary Lambert         | Pet Sematary                    | Horror             | pet_sematary.gif
+   |     6180 |      0 |          1989 | 13.99 |         887 |
+|         3025 | John Singleton       | Poetic Justice                  | Drama              | poetic_justice.gif          |6540 |      0 |          1993 | 20.99 |         523 |
+|         3035 | Tobe Hopper          | Poltergeist                     | Horror             | poltergeist.gif
+   |     6900 |      0 |          1982 | 20.99 |         821 |
+|         3036 | Alfred Hitchcock     | Psycho                          | Horror             | psycho.gif
+   |     6540 |      0 |          1960 | 15.99 |           0 |
+|         3026 | David Anspaugh       | Rudy                            | Drama              | rudy.gif
+   |     6840 |      0 |          1993 | 15.99 |         658 |
+|         3037 | Wes Craven           | Scream                          | Horror             | scream.gif
+   |     6660 |      0 |          1996 | 22.99 |         692 |
+|         3050 | David Fincher        | Seven                           | Suspense           | seven.gif
+   |     7620 |      0 |          1995 | 14.99 |         421 |
+|         3027 | Frank Darabont       | Shawshank Redemption            | Drama              | shawshank_redemption.gif    |8520 |      0 |          1994 | 20.99 |         529 |
+|         3028 | George Tillman       | Soul Food                       | Drama              | soul_food.gif
+   |     6840 |      0 |          1997 | 11.99 |         687 |
+|         3044 | Johnathan Frakes     | Star Trek: First Contact        | Science Fiction    | star_trek_first_contact.gif |6660 |      0 |          1996 | 11.99 |         593 |
+|         3045 | George Lucas         | Star Wars                       | Science Fiction    | star_wars.gif
+   |     7260 |      0 |          1977 | 13.99 |         720 |
+|         3018 | John Landis          | The Blues Brothers              | Comedy             | blues_brothers.gif          |9180 |      0 |          1980 | 14.99 |           0 |
+|         3051 | Sydney Pollack       | The Firm                        | Suspense           | the_firm.gif
+   |     9240 |      0 |          1993 | 17.99 |         655 |
+|         3052 | David Fincher        | The Game                        | Suspense           | the_game.gif
+   |     6900 |      0 |          1997 | 21.99 |         581 |
+|         3007 | John McTiernan       | The Hunt for Red October        | Action & Adventure | hunt_for_red_october.gif    |8100 |      0 |          1990 | 10.99 |         618 |
+|         3019 | Tom Shadyac          | The Nutty Professor             | Comedy             | nutty_professor.gif         |5700 |      0 |          1996 | 19.99 |         925 |
+|         3008 | Michael Bay          | The Rock                        | Action & Adventure | the_rock.gif
+   |     8160 |      0 |          1996 | 20.99 |         514 |
+|         3053 | Jonathan Demme       | The Silence of the Lambs        | Suspense           | silence_of_the_lambs.gif    |7080 |      0 |          1991 | 22.99 |         817 |
+|         3054 | Bryan Singer         | The Usual Suspects              | Suspense           | usual_suspects.gif          |6360 |      0 |          1995 | 23.99 |           0 |
+|         3029 | James Cameron        | Titanic                         | Drama              | titanic.gif
+   |    11640 |      0 |          1997 | 22.99 |         917 |
+|         3009 | Tony Scott           | Top Gun                         | Action & Adventure | top_gun.gif
+   |     6600 |      0 |          1986 | 11.99 |         499 |
+|         3046 | Steven Lisberger     | Tron                            | Science Fiction    | tron.gif
+   |     5700 |      0 |          1982 | 12.99 |         653 |
++--------------+----------------------+---------------------------------+--------------------+-----------------------------+----------+--------+---------------+-------+-------------+
+55 rows in set (0.00 sec)
+
+mysql> SELECT * FROM video.Video_Actors;
++------+----------------------+--------------+
+| id   | name                 | recording_id |
++------+----------------------+--------------+
+|   29 | Adam Baldwin         |         3005 |
+|   77 | Adrian Pasdar        |         3009 |
+|  270 | Adrienne Corri       |         3039 |
+|  223 | Adrienne King        |         3032 |
+|   49 | Alec Baldwin         |         3007 |
+|  319 | Alec Guinness        |         3045 |
+|  102 | Alfre Woodard        |         3013 |
+|  310 | Alice Krige          |         3044 |
+|  218 | Amy Irving           |         3031 |
+|  282 | Angela Bassett       |         3040 |
+|  358 | Anna Katerina        |         3052 |
+|  342 | Anne Bancroft        |         3049 |
+|  320 | Anthony Daniels      |         3045 |
+|   66 | Anthony Edwards      |         3009 |
+|  361 | Anthony Hopkins      |         3053 |
+|  241 | Anthony Perkins      |         3036 |
+|   99 | Antonio Fargas       |         3012 |
+|   32 | Arliss Howard        |         3005 |
+|  271 | Aubrey Morris        |         3039 |
+|  169 | Barbara O`Neil       |         3023 |
+|  325 | Barnard Hughes       |         3046 |
+|   75 | Barry Tubb           |         3009 |
+|  341 | Bebe Neuwirth        |         3049 |
+|  125 | Bee Duffell          |         3016 |
+|  172 | Ben Affleck          |         3024 |
+|  371 | Benicio Del Toro     |         3054 |
+|  204 | Bernard Hill         |         3029 |
+|  224 | Betsy Palmer         |         3032 |
+|  219 | Betty Buckley        |         3031 |
+|   97 | Bill Duke            |         3012 |
+|   89 | Bill Murray          |         3011 |
+|   38 | Bill Pullman         |         3006 |
+|  201 | Billy Zane           |         3029 |
+|  190 | Bob Gunton           |         3027 |
+|   61 | Bokeem Woodbine      |         3008 |
+|  290 | Brad Dourif          |         3041 |
+|  344 | Brad Pitt            |         3050 |
+|  311 | Brent Spiner         |         3044 |
+|  365 | Brooke Smith         |         3053 |
+|  323 | Bruce Boxleitner     |         3046 |
+|  137 | Cab Colloway         |         3018 |
+|  275 | Carl Duering         |         3039 |
+|  124 | Carol Cleveland      |         3016 |
+|   24 | Carol Speed          |         3004 |
+|  334 | Caroline Goodall     |         3048 |
+|  140 | Carrie Fisher        |         3018 |
+|  175 | Casey Affleck        |         3024 |
+|   19 | Catherine McCormack  |         3002 |
+|  118 | Charles Rocket       |         3015 |
+|  186 | Charles S. Dutton    |         3026 |
+|  328 | Chazz Palminteri     |         3047 |
+|  300 | Cherie Lunghi        |         3042 |
+|   87 | Chevy Chase          |         3011 |
+|  324 | Cindy Morgan         |         3046 |
+|   63 | Claire Forlani       |         3008 |
+|  164 | Clark Gable          |         3023 |
+|  176 | Cole Hauser          |         3024 |
+|  123 | Connie Booth         |         3016 |
+|  251 | Courtney Cox         |         3037 |
+|  236 | Craig T. Nelson      |         3035 |
+|  233 | Dale Midkiff         |         3034 |
+|  135 | Dan Aykroyd          |         3018 |
+|  326 | Dan Shor             |         3046 |
+|  206 | Danny Nucci          |         3029 |
+|  253 | David Arquette       |         3037 |
+|   59 | David Morse          |         3008 |
+|  104 | David Patrick Kelly  |         3013 |
+|  352 | David Strathairn     |         3051 |
+|  207 | David Warner         |         3029 |
+|  289 | Dean Stockwell       |         3041 |
+|  356 | Deborah Kara Unger   |         3052 |
+|  103 | Delroy Lindo         |         3013 |
+|  159 | Demi Moore           |         3022 |
+|  234 | Denise Crosby        |         3034 |
+|    4 | Dennis Hopper        |         3000 |
+|  335 | Dennis Miller        |         3048 |
+|  364 | Diane Baker          |         3053 |
+|  237 | Dominique Dunne      |         3035 |
+|  333 | Donald Sutherland    |         3048 |
+|   33 | Dorian Harewood      |         3005 |
+|  250 | Drew Barrymore       |         3037 |
+|   56 | Ed Harris            |         3008 |
+|   31 | Ed O`Ross            |         3005 |
+|  143 | Eddie Murphy         |         3019 |
+|   79 | Elizabeth Hurley     |         3010 |
+|   84 | Fabiana Udenio       |         3010 |
+|  203 | Frances Fisher       |         3029 |
+|  259 | Frances Lee McCain   |         3037 |
+|  230 | Frances Sternhagen   |         3033 |
+|  232 | Fred Gwyne           |         3034 |
+|    3 | Frederic Forrest     |         3000 |
+|  366 | Gabriel Byrne        |         3054 |
+|  353 | Gary Busey           |         3051 |
+|  155 | Gary Sinise          |         3021 |
+|  315 | Gates McFadden       |         3044 |
+|  285 | Geoffrey Blake       |         3040 |
+|  343 | George C. Scott      |         3049 |
+|  100 | George Carlin        |         3012 |
+|  193 | Gil Bellows          |         3027 |
+|  121 | Graham Chapman       |         3016 |
+|  346 | Gwyneth Paltrow      |         3050 |
+|    6 | Harrison Ford        |         3000 |
+|   47 | Harry Connick Jr.    |         3006 |
+|  265 | Harry Dean Stanton   |         3038 |
+|   45 | Harvey Fierstein     |         3006 |
+|  166 | Hattie McDaniel      |         3023 |
+|  239 | Heather O`Rourke     |         3035 |
+|  299 | Helen Mirren         |         3042 |
+|  141 | Henry Gibson         |         3018 |
+|  257 | Henry Winkler        |         3037 |
+|  351 | Holly Hunter         |         3051 |
+|  263 | Ian Holm             |         3038 |
+|  197 | Irma Hall            |         3028 |
+|   93 | Irwin Corey          |         3012 |
+|  329 | Isabelle Adjani      |         3047 |
+|   94 | Ivan Dixon           |         3012 |
+|  296 | Jack Nance           |         3041 |
+|  144 | Jada Pinkett-Smith   |         3019 |
+|  146 | Jamal Mixon          |         3019 |
+|  136 | James Brown          |         3018 |
+|  228 | James Caan           |         3033 |
+|  147 | James Coburn         |         3019 |
+|  309 | James Cromwell       |         3044 |
+|   51 | James Earl Jones     |         3007 |
+|  272 | James Marcus         |         3039 |
+|   44 | James Rebhorn        |         3006 |
+|   76 | James Tolkan         |         3009 |
+|  192 | James Whitmore       |         3027 |
+|  279 | James Woods          |         3040 |
+|  178 | Janet Jackson        |         3025 |
+|  242 | Janet Leigh          |         3036 |
+|  226 | Jason (sh...sh...sh) |         3032 |
+|  349 | Jeanne Tripplehorn   |         3051 |
+|  321 | Jeff Bridges         |         3046 |
+|  114 | Jeff Daniels         |         3015 |
+|   37 | Jeff Goldblum        |         3006 |
+|  286 | Jena Malone          |         3040 |
+|  152 | Jennifer Runyon      |         3020 |
+|   25 | Jerry Jones          |         3004 |
+|  113 | Jim Carrey           |         3015 |
+|   27 | Jimmy Lynch          |         3004 |
+|  240 | JoBeth Williams      |         3035 |
+|  277 | Jodie Foster         |         3040 |
+|   14 | Joe Pantoliano       |         3001 |
+|  182 | Joe Torry            |         3025 |
+|  145 | John Ales            |         3019 |
+|  134 | John Belushi         |         3018 |
+|   60 | John C. McGinley     |         3008 |
+|  276 | John Clive           |         3039 |
+|  245 | John Gavin           |         3036 |
+|  264 | John Hurt            |         3038 |
+|  246 | John McIntire        |         3036 |
+|  177 | John Mighton         |         3024 |
+|   74 | John Stockwell       |         3009 |
+|  214 | John Travolta        |         3031 |
+|  126 | John Young           |         3016 |
+|  107 | Joie Lee             |         3013 |
+|  205 | Jonathan Hyde        |         3029 |
+|  288 | José Ferrer          |         3041 |
+|  109 | Jose Zuniga          |         3013 |
+|  258 | Joseph Whipp         |         3037 |
+|  340 | Joser Sommer         |         3049 |
+|   40 | Judd Hirsch          |         3006 |
+|  116 | Karen Duffy          |         3015 |
+|  212 | Kasi Lemmons         |         3030 |
+|  200 | Kate Winslet         |         3029 |
+|  139 | Kathleen Freeman     |         3018 |
+|  202 | Kathy Bates          |         3029 |
+|   65 | Kelly McGillis       |         3009 |
+|  292 | Kenneth McMillan     |         3041 |
+|  225 | Kevin Bacon          |         3032 |
+|  370 | Kevin Pollak         |         3054 |
+|  347 | Kevin Spacey         |         3050 |
+|   34 | Kevyn Major Howard   |         3005 |
+|  287 | Kyle MacLachlan      |         3041 |
+|   26 | Lady Reed            |         3004 |
+|  304 | Laura Dern           |         3043 |
+|  231 | Lauren Bacall        |         3033 |
+|  115 | Lauren Holly         |         3015 |
+|    7 | Laurence Fishburne   |         3000 |
+|  199 | Leonardo Di Caprio   |         3029 |
+|  167 | Leslie Howard        |         3023 |
+|  313 | LeVar Burton         |         3044 |
+|  302 | Liam Neeson          |         3042 |
+|  260 | Liev Screiber        |         3037 |
+|  187 | Lili Taylor          |         3026 |
+|  256 | Linda Blair          |         3037 |
+|  295 | Linda Hunt           |         3041 |
+|   15 | Lisa Boyle           |         3001 |
+|  150 | Lori Singer          |         3020 |
+|  268 | Malcolm McDowell     |         3039 |
+|  133 | Mara Wilson          |         3017 |
+|   39 | Margaret Colin       |         3006 |
+|  316 | Mark Hamill          |         3045 |
+|    0 | Marlon Brando        |         3000 |
+|  243 | Martin Balsam        |         3036 |
+|   10 | Martin Lawrence      |         3001 |
+|    1 | Martin Sheen         |         3000 |
+|   43 | Mary McDonnell       |         3006 |
+|  171 | Matt Damon           |         3024 |
+|  254 | Matthew Lillard      |         3037 |
+|  278 | Matthew McConaughey  |         3040 |
+|   28 | Matthew Modine       |         3005 |
+|   69 | Meg Ryan             |         3009 |
+|   16 | Mel Gibson           |         3002 |
+|  101 | Melanie Mayron       |         3012 |
+|  273 | Michael Bates        |         3039 |
+|  198 | Michael Beach        |         3028 |
+|   57 | Michael Biehn        |         3008 |
+|  314 | Michael Dorn         |         3044 |
+|  331 | Michael Douglas      |         3048 |
+|   72 | Michael Ironside     |         3009 |
+|   90 | Michael O`Keefe      |         3011 |
+|   80 | Michael York         |         3010 |
+|   78 | Mike Myers           |         3010 |
+|  117 | Mike Starr           |         3015 |
+|  235 | Miko Hughes          |         3034 |
+|   81 | Mimi Rogers          |         3010 |
+|   85 | Mindy Sterling       |         3010 |
+|  173 | Minnie Driver        |         3024 |
+|  120 | Monty Python         |         3016 |
+|   22 | Morgan Freeman       |         3003 |
+|  156 | Mykelti Williamson   |         3021 |
+|  216 | Nancy Allen          |         3031 |
+|  185 | Ned Beatty           |         3026 |
+|  249 | Neve Campbell        |         3037 |
+|  196 | Nia Long             |         3028 |
+|  301 | Nicholas Clay        |         3042 |
+|  297 | Nicol Williamson     |         3042 |
+|   54 | Nicolas Cage         |         3008 |
+|  337 | Nicole Kidman        |         3049 |
+|  298 | Nigel Terry          |         3042 |
+|  238 | Oliver Robbins       |         3035 |
+|  165 | Olivia de Havilland  |         3023 |
+|  220 | P. J. Soles          |         3031 |
+|  151 | Pat Hingle           |         3020 |
+|  269 | Patrick Magee        |         3039 |
+|   17 | Patrick McGoohan     |         3002 |
+|  293 | Patrick Stewart      |         3041 |
+|  158 | Patrick Swayze       |         3022 |
+|  312 | Patti Yasutake       |         3044 |
+|   86 | Paul Dillon          |         3010 |
+|  359 | Peter Donat          |         3052 |
+|  339 | Peter Gallagher      |         3049 |
+|  130 | Pierce Brosnan       |         3017 |
+|  217 | Piper Laurie         |         3031 |
+|   30 | R. Lee Erney         |         3005 |
+|   41 | Randy Quaid          |         3006 |
+|  138 | Ray Charles          |         3018 |
+|  181 | Regina King          |         3025 |
+|  305 | Richard Attenborough |         3043 |
+|   96 | Richard Brestoff     |         3012 |
+|  229 | Richard Farnsworth   |         3033 |
+|   92 | Richard Pryor        |         3012 |
+|  162 | Rick Aviles          |         3022 |
+|   73 | Rick Rossovich       |         3009 |
+|  283 | Rob Lowe             |         3040 |
+|    2 | Robert Duvall        |         3000 |
+|   46 | Robert Loggia        |         3006 |
+|  132 | Robert Prosky        |         3017 |
+|   82 | Robert Wagner        |         3010 |
+|  128 | Robin Williams       |         3017 |
+|  154 | Robin Wright         |         3021 |
+|   88 | Rodney Dangerfield   |         3011 |
+|  183 | Roger Guenveur Smith |         3025 |
+|  255 | Rose McGowan         |         3037 |
+|   23 | Rudy Ray Moore       |         3004 |
+|  108 | RuPaul               |         3013 |
+|  129 | Sally Field          |         3017 |
+|    8 | Sam Bottoms          |         3000 |
+|   52 | Sam Neill            |         3007 |
+|  307 | Samuel L. Jackson    |         3043 |
+|    5 | Scott Glenn          |         3000 |
+|  184 | Sean Astin           |         3026 |
+|   48 | Sean Connery         |         3007 |
+|  148 | Sean Penn            |         3020 |
+|  294 | Sean Young           |         3041 |
+|   83 | Seth Green           |         3010 |
+|  327 | Sharon Stone         |         3047 |
+|  262 | Sigourney Weaver     |         3038 |
+|  247 | Simon Oakland        |         3036 |
+|  213 | Sissy Spacek         |         3031 |
+|  252 | Skeet Ulrich         |         3037 |
+|   18 | Sophie Marceau       |         3002 |
+|  106 | Spike Lee            |         3013 |
+|  222 | Stefan Gierasch      |         3031 |
+|  174 | Stellan Skarsgard    |         3024 |
+|  368 | Stephen Baldwin      |         3054 |
+|  142 | Steven Spielberg     |         3018 |
+|  291 | Sting                |         3041 |
+|   98 | Sully Boyar          |         3012 |
+|  221 | Sydney Lassick       |         3031 |
+|   13 | Tcheky Karyo         |         3001 |
+|   11 | Tea Leoni            |         3001 |
+|   91 | Ted Knight           |         3011 |
+|  363 | Ted Levine           |         3053 |
+|  119 | Teri Garr            |         3015 |
+|  122 | Terry Gilliam        |         3016 |
+|  127 | Terry Jones          |         3016 |
+|   12 | Theresa Randle       |         3001 |
+|  168 | Thomas Mitchell      |         3023 |
+|   53 | Tim Curry            |         3007 |
+|   68 | Tim Robbins          |         3009 |
+|  149 | Timothy Hutton       |         3020 |
+|   64 | Tom Cruise           |         3009 |
+|  153 | Tom Hanks            |         3021 |
+|  261 | Tom Skerrit          |         3038 |
+|   70 | Tom Skerritt         |         3009 |
+|  209 | Tony Todd            |         3030 |
+|   95 | Tracy Reed           |         3012 |
+|  179 | Tupac Shakur         |         3025 |
+|  180 | Tyra Ferrell         |         3025 |
+|   67 | Val Kilmer           |         3009 |
+|   62 | Vanessa Marcil       |         3008 |
+|  194 | Vanessa Williams     |         3028 |
+|  248 | Vaughn Taylor        |         3036 |
+|  244 | Vera Miles           |         3036 |
+|  266 | Veronica Cartwright  |         3038 |
+|   35 | Vincent D`Onofrio    |         3005 |
+|  161 | Vincent Schiavelli   |         3022 |
+|  208 | Virginia Madsen      |         3030 |
+|   42 | Vivica A. Fox        |         3006 |
+|  195 | Vivica Fox           |         3028 |
+|  163 | Vivien Leigh         |         3023 |
+|  274 | Warren Clark         |         3039 |
+|   71 | Whip Hubley          |         3009 |
+|  160 | Whoopi Goldberg      |         3022 |
+|    9 | Will Smith           |         3001 |
+|  284 | William Fichtner     |         3040 |
+|   58 | William Forsythe     |         3008 |
+|  215 | William Katt         |         3031 |
+|  191 | William Sadler       |         3027 |
+|  211 | Xander Berkeley      |         3030 |
+|  267 | Yaphet Kotto         |         3038 |
+|  105 | Zelda Harris         |         3013 |
++------+----------------------+--------------+
+335 rows in set (0.00 sec)
+
+mysql> show warnings;
+Empty set (0.00 sec)
+
+mysql> show warnings video.Video_Recordings;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for theright syntax to use near 'video.Video_Recordings' at line 1
+mysql> SELECT * FROM video.Video_Categories;
++------+--------------------+
+| id   | name               |
++------+--------------------+
+|    0 | Action & Adventure |
+|    1 | Comedy             |
+|    2 | Drama              |
+|    3 | Horror             |
+|    4 | Science Fiction    |
+|    5 | Suspense           |
++------+--------------------+
+6 rows in set (0.00 sec)
+
+mysql> select count(*) from Video_Actors;
++----------+
+| count(*) |
++----------+
+|      335 |
++----------+
+1 row in set (0.02 sec)
+
+mysql> update Video_Categories set name = replace(trim(name),'"','');
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 6  Changed: 0  Warnings: 0
+
+mysql> show warnings;
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM video.Video_Actors;
++------+----------------------+--------------+
+| id   | name                 | recording_id |
++------+----------------------+--------------+
+|   29 | Adam Baldwin         |         3005 |
+|   77 | Adrian Pasdar        |         3009 |
+|  270 | Adrienne Corri       |         3039 |
+|  223 | Adrienne King        |         3032 |
+|   49 | Alec Baldwin         |         3007 |
+|  319 | Alec Guinness        |         3045 |
+|  102 | Alfre Woodard        |         3013 |
+|  310 | Alice Krige          |         3044 |
+|  218 | Amy Irving           |         3031 |
+|  282 | Angela Bassett       |         3040 |
+|  358 | Anna Katerina        |         3052 |
+|  342 | Anne Bancroft        |         3049 |
+|  320 | Anthony Daniels      |         3045 |
+|   66 | Anthony Edwards      |         3009 |
+|  361 | Anthony Hopkins      |         3053 |
+|  241 | Anthony Perkins      |         3036 |
+|   99 | Antonio Fargas       |         3012 |
+|   32 | Arliss Howard        |         3005 |
+|  271 | Aubrey Morris        |         3039 |
+|  169 | Barbara O`Neil       |         3023 |
+|  325 | Barnard Hughes       |         3046 |
+|   75 | Barry Tubb           |         3009 |
+|  341 | Bebe Neuwirth        |         3049 |
+|  125 | Bee Duffell          |         3016 |
+|  172 | Ben Affleck          |         3024 |
+|  371 | Benicio Del Toro     |         3054 |
+|  204 | Bernard Hill         |         3029 |
+|  224 | Betsy Palmer         |         3032 |
+|  219 | Betty Buckley        |         3031 |
+|   97 | Bill Duke            |         3012 |
+|   89 | Bill Murray          |         3011 |
+|   38 | Bill Pullman         |         3006 |
+|  201 | Billy Zane           |         3029 |
+|  190 | Bob Gunton           |         3027 |
+|   61 | Bokeem Woodbine      |         3008 |
+|  290 | Brad Dourif          |         3041 |
+|  344 | Brad Pitt            |         3050 |
+|  311 | Brent Spiner         |         3044 |
+|  365 | Brooke Smith         |         3053 |
+|  323 | Bruce Boxleitner     |         3046 |
+|  137 | Cab Colloway         |         3018 |
+|  275 | Carl Duering         |         3039 |
+|  124 | Carol Cleveland      |         3016 |
+|   24 | Carol Speed          |         3004 |
+|  334 | Caroline Goodall     |         3048 |
+|  140 | Carrie Fisher        |         3018 |
+|  175 | Casey Affleck        |         3024 |
+|   19 | Catherine McCormack  |         3002 |
+|  118 | Charles Rocket       |         3015 |
+|  186 | Charles S. Dutton    |         3026 |
+|  328 | Chazz Palminteri     |         3047 |
+|  300 | Cherie Lunghi        |         3042 |
+|   87 | Chevy Chase          |         3011 |
+|  324 | Cindy Morgan         |         3046 |
+|   63 | Claire Forlani       |         3008 |
+|  164 | Clark Gable          |         3023 |
+|  176 | Cole Hauser          |         3024 |
+|  123 | Connie Booth         |         3016 |
+|  251 | Courtney Cox         |         3037 |
+|  236 | Craig T. Nelson      |         3035 |
+|  233 | Dale Midkiff         |         3034 |
+|  135 | Dan Aykroyd          |         3018 |
+|  326 | Dan Shor             |         3046 |
+|  206 | Danny Nucci          |         3029 |
+|  253 | David Arquette       |         3037 |
+|   59 | David Morse          |         3008 |
+|  104 | David Patrick Kelly  |         3013 |
+|  352 | David Strathairn     |         3051 |
+|  207 | David Warner         |         3029 |
+|  289 | Dean Stockwell       |         3041 |
+|  356 | Deborah Kara Unger   |         3052 |
+|  103 | Delroy Lindo         |         3013 |
+|  159 | Demi Moore           |         3022 |
+|  234 | Denise Crosby        |         3034 |
+|    4 | Dennis Hopper        |         3000 |
+|  335 | Dennis Miller        |         3048 |
+|  364 | Diane Baker          |         3053 |
+|  237 | Dominique Dunne      |         3035 |
+|  333 | Donald Sutherland    |         3048 |
+|   33 | Dorian Harewood      |         3005 |
+|  250 | Drew Barrymore       |         3037 |
+|   56 | Ed Harris            |         3008 |
+|   31 | Ed O`Ross            |         3005 |
+|  143 | Eddie Murphy         |         3019 |
+|   79 | Elizabeth Hurley     |         3010 |
+|   84 | Fabiana Udenio       |         3010 |
+|  203 | Frances Fisher       |         3029 |
+|  259 | Frances Lee McCain   |         3037 |
+|  230 | Frances Sternhagen   |         3033 |
+|  232 | Fred Gwyne           |         3034 |
+|    3 | Frederic Forrest     |         3000 |
+|  366 | Gabriel Byrne        |         3054 |
+|  353 | Gary Busey           |         3051 |
+|  155 | Gary Sinise          |         3021 |
+|  315 | Gates McFadden       |         3044 |
+|  285 | Geoffrey Blake       |         3040 |
+|  343 | George C. Scott      |         3049 |
+|  100 | George Carlin        |         3012 |
+|  193 | Gil Bellows          |         3027 |
+|  121 | Graham Chapman       |         3016 |
+|  346 | Gwyneth Paltrow      |         3050 |
+|    6 | Harrison Ford        |         3000 |
+|   47 | Harry Connick Jr.    |         3006 |
+|  265 | Harry Dean Stanton   |         3038 |
+|   45 | Harvey Fierstein     |         3006 |
+|  166 | Hattie McDaniel      |         3023 |
+|  239 | Heather O`Rourke     |         3035 |
+|  299 | Helen Mirren         |         3042 |
+|  141 | Henry Gibson         |         3018 |
+|  257 | Henry Winkler        |         3037 |
+|  351 | Holly Hunter         |         3051 |
+|  263 | Ian Holm             |         3038 |
+|  197 | Irma Hall            |         3028 |
+|   93 | Irwin Corey          |         3012 |
+|  329 | Isabelle Adjani      |         3047 |
+|   94 | Ivan Dixon           |         3012 |
+|  296 | Jack Nance           |         3041 |
+|  144 | Jada Pinkett-Smith   |         3019 |
+|  146 | Jamal Mixon          |         3019 |
+|  136 | James Brown          |         3018 |
+|  228 | James Caan           |         3033 |
+|  147 | James Coburn         |         3019 |
+|  309 | James Cromwell       |         3044 |
+|   51 | James Earl Jones     |         3007 |
+|  272 | James Marcus         |         3039 |
+|   44 | James Rebhorn        |         3006 |
+|   76 | James Tolkan         |         3009 |
+|  192 | James Whitmore       |         3027 |
+|  279 | James Woods          |         3040 |
+|  178 | Janet Jackson        |         3025 |
+|  242 | Janet Leigh          |         3036 |
+|  226 | Jason (sh...sh...sh) |         3032 |
+|  349 | Jeanne Tripplehorn   |         3051 |
+|  321 | Jeff Bridges         |         3046 |
+|  114 | Jeff Daniels         |         3015 |
+|   37 | Jeff Goldblum        |         3006 |
+|  286 | Jena Malone          |         3040 |
+|  152 | Jennifer Runyon      |         3020 |
+|   25 | Jerry Jones          |         3004 |
+|  113 | Jim Carrey           |         3015 |
+|   27 | Jimmy Lynch          |         3004 |
+|  240 | JoBeth Williams      |         3035 |
+|  277 | Jodie Foster         |         3040 |
+|   14 | Joe Pantoliano       |         3001 |
+|  182 | Joe Torry            |         3025 |
+|  145 | John Ales            |         3019 |
+|  134 | John Belushi         |         3018 |
+|   60 | John C. McGinley     |         3008 |
+|  276 | John Clive           |         3039 |
+|  245 | John Gavin           |         3036 |
+|  264 | John Hurt            |         3038 |
+|  246 | John McIntire        |         3036 |
+|  177 | John Mighton         |         3024 |
+|   74 | John Stockwell       |         3009 |
+|  214 | John Travolta        |         3031 |
+|  126 | John Young           |         3016 |
+|  107 | Joie Lee             |         3013 |
+|  205 | Jonathan Hyde        |         3029 |
+|  288 | José Ferrer          |         3041 |
+|  109 | Jose Zuniga          |         3013 |
+|  258 | Joseph Whipp         |         3037 |
+|  340 | Joser Sommer         |         3049 |
+|   40 | Judd Hirsch          |         3006 |
+|  116 | Karen Duffy          |         3015 |
+|  212 | Kasi Lemmons         |         3030 |
+|  200 | Kate Winslet         |         3029 |
+|  139 | Kathleen Freeman     |         3018 |
+|  202 | Kathy Bates          |         3029 |
+|   65 | Kelly McGillis       |         3009 |
+|  292 | Kenneth McMillan     |         3041 |
+|  225 | Kevin Bacon          |         3032 |
+|  370 | Kevin Pollak         |         3054 |
+|  347 | Kevin Spacey         |         3050 |
+|   34 | Kevyn Major Howard   |         3005 |
+|  287 | Kyle MacLachlan      |         3041 |
+|   26 | Lady Reed            |         3004 |
+|  304 | Laura Dern           |         3043 |
+|  231 | Lauren Bacall        |         3033 |
+|  115 | Lauren Holly         |         3015 |
+|    7 | Laurence Fishburne   |         3000 |
+|  199 | Leonardo Di Caprio   |         3029 |
+|  167 | Leslie Howard        |         3023 |
+|  313 | LeVar Burton         |         3044 |
+|  302 | Liam Neeson          |         3042 |
+|  260 | Liev Screiber        |         3037 |
+|  187 | Lili Taylor          |         3026 |
+|  256 | Linda Blair          |         3037 |
+|  295 | Linda Hunt           |         3041 |
+|   15 | Lisa Boyle           |         3001 |
+|  150 | Lori Singer          |         3020 |
+|  268 | Malcolm McDowell     |         3039 |
+|  133 | Mara Wilson          |         3017 |
+|   39 | Margaret Colin       |         3006 |
+|  316 | Mark Hamill          |         3045 |
+|    0 | Marlon Brando        |         3000 |
+|  243 | Martin Balsam        |         3036 |
+|   10 | Martin Lawrence      |         3001 |
+|    1 | Martin Sheen         |         3000 |
+|   43 | Mary McDonnell       |         3006 |
+|  171 | Matt Damon           |         3024 |
+|  254 | Matthew Lillard      |         3037 |
+|  278 | Matthew McConaughey  |         3040 |
+|   28 | Matthew Modine       |         3005 |
+|   69 | Meg Ryan             |         3009 |
+|   16 | Mel Gibson           |         3002 |
+|  101 | Melanie Mayron       |         3012 |
+|  273 | Michael Bates        |         3039 |
+|  198 | Michael Beach        |         3028 |
+|   57 | Michael Biehn        |         3008 |
+|  314 | Michael Dorn         |         3044 |
+|  331 | Michael Douglas      |         3048 |
+|   72 | Michael Ironside     |         3009 |
+|   90 | Michael O`Keefe      |         3011 |
+|   80 | Michael York         |         3010 |
+|   78 | Mike Myers           |         3010 |
+|  117 | Mike Starr           |         3015 |
+|  235 | Miko Hughes          |         3034 |
+|   81 | Mimi Rogers          |         3010 |
+|   85 | Mindy Sterling       |         3010 |
+|  173 | Minnie Driver        |         3024 |
+|  120 | Monty Python         |         3016 |
+|   22 | Morgan Freeman       |         3003 |
+|  156 | Mykelti Williamson   |         3021 |
+|  216 | Nancy Allen          |         3031 |
+|  185 | Ned Beatty           |         3026 |
+|  249 | Neve Campbell        |         3037 |
+|  196 | Nia Long             |         3028 |
+|  301 | Nicholas Clay        |         3042 |
+|  297 | Nicol Williamson     |         3042 |
+|   54 | Nicolas Cage         |         3008 |
+|  337 | Nicole Kidman        |         3049 |
+|  298 | Nigel Terry          |         3042 |
+|  238 | Oliver Robbins       |         3035 |
+|  165 | Olivia de Havilland  |         3023 |
+|  220 | P. J. Soles          |         3031 |
+|  151 | Pat Hingle           |         3020 |
+|  269 | Patrick Magee        |         3039 |
+|   17 | Patrick McGoohan     |         3002 |
+|  293 | Patrick Stewart      |         3041 |
+|  158 | Patrick Swayze       |         3022 |
+|  312 | Patti Yasutake       |         3044 |
+|   86 | Paul Dillon          |         3010 |
+|  359 | Peter Donat          |         3052 |
+|  339 | Peter Gallagher      |         3049 |
+|  130 | Pierce Brosnan       |         3017 |
+|  217 | Piper Laurie         |         3031 |
+|   30 | R. Lee Erney         |         3005 |
+|   41 | Randy Quaid          |         3006 |
+|  138 | Ray Charles          |         3018 |
+|  181 | Regina King          |         3025 |
+|  305 | Richard Attenborough |         3043 |
+|   96 | Richard Brestoff     |         3012 |
+|  229 | Richard Farnsworth   |         3033 |
+|   92 | Richard Pryor        |         3012 |
+|  162 | Rick Aviles          |         3022 |
+|   73 | Rick Rossovich       |         3009 |
+|  283 | Rob Lowe             |         3040 |
+|    2 | Robert Duvall        |         3000 |
+|   46 | Robert Loggia        |         3006 |
+|  132 | Robert Prosky        |         3017 |
+|   82 | Robert Wagner        |         3010 |
+|  128 | Robin Williams       |         3017 |
+|  154 | Robin Wright         |         3021 |
+|   88 | Rodney Dangerfield   |         3011 |
+|  183 | Roger Guenveur Smith |         3025 |
+|  255 | Rose McGowan         |         3037 |
+|   23 | Rudy Ray Moore       |         3004 |
+|  108 | RuPaul               |         3013 |
+|  129 | Sally Field          |         3017 |
+|    8 | Sam Bottoms          |         3000 |
+|   52 | Sam Neill            |         3007 |
+|  307 | Samuel L. Jackson    |         3043 |
+|    5 | Scott Glenn          |         3000 |
+|  184 | Sean Astin           |         3026 |
+|   48 | Sean Connery         |         3007 |
+|  148 | Sean Penn            |         3020 |
+|  294 | Sean Young           |         3041 |
+|   83 | Seth Green           |         3010 |
+|  327 | Sharon Stone         |         3047 |
+|  262 | Sigourney Weaver     |         3038 |
+|  247 | Simon Oakland        |         3036 |
+|  213 | Sissy Spacek         |         3031 |
+|  252 | Skeet Ulrich         |         3037 |
+|   18 | Sophie Marceau       |         3002 |
+|  106 | Spike Lee            |         3013 |
+|  222 | Stefan Gierasch      |         3031 |
+|  174 | Stellan Skarsgard    |         3024 |
+|  368 | Stephen Baldwin      |         3054 |
+|  142 | Steven Spielberg     |         3018 |
+|  291 | Sting                |         3041 |
+|   98 | Sully Boyar          |         3012 |
+|  221 | Sydney Lassick       |         3031 |
+|   13 | Tcheky Karyo         |         3001 |
+|   11 | Tea Leoni            |         3001 |
+|   91 | Ted Knight           |         3011 |
+|  363 | Ted Levine           |         3053 |
+|  119 | Teri Garr            |         3015 |
+|  122 | Terry Gilliam        |         3016 |
+|  127 | Terry Jones          |         3016 |
+|   12 | Theresa Randle       |         3001 |
+|  168 | Thomas Mitchell      |         3023 |
+|   53 | Tim Curry            |         3007 |
+|   68 | Tim Robbins          |         3009 |
+|  149 | Timothy Hutton       |         3020 |
+|   64 | Tom Cruise           |         3009 |
+|  153 | Tom Hanks            |         3021 |
+|  261 | Tom Skerrit          |         3038 |
+|   70 | Tom Skerritt         |         3009 |
+|  209 | Tony Todd            |         3030 |
+|   95 | Tracy Reed           |         3012 |
+|  179 | Tupac Shakur         |         3025 |
+|  180 | Tyra Ferrell         |         3025 |
+|   67 | Val Kilmer           |         3009 |
+|   62 | Vanessa Marcil       |         3008 |
+|  194 | Vanessa Williams     |         3028 |
+|  248 | Vaughn Taylor        |         3036 |
+|  244 | Vera Miles           |         3036 |
+|  266 | Veronica Cartwright  |         3038 |
+|   35 | Vincent D`Onofrio    |         3005 |
+|  161 | Vincent Schiavelli   |         3022 |
+|  208 | Virginia Madsen      |         3030 |
+|   42 | Vivica A. Fox        |         3006 |
+|  195 | Vivica Fox           |         3028 |
+|  163 | Vivien Leigh         |         3023 |
+|  274 | Warren Clark         |         3039 |
+|   71 | Whip Hubley          |         3009 |
+|  160 | Whoopi Goldberg      |         3022 |
+|    9 | Will Smith           |         3001 |
+|  284 | William Fichtner     |         3040 |
+|   58 | William Forsythe     |         3008 |
+|  215 | William Katt         |         3031 |
+|  191 | William Sadler       |         3027 |
+|  211 | Xander Berkeley      |         3030 |
+|  267 | Yaphet Kotto         |         3038 |
+|  105 | Zelda Harris         |         3013 |
++------+----------------------+--------------+
+335 rows in set (0.00 sec)
+
+mysql> show warnings;
+Empty set (0.00 sec)
+
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Actors.txt' into table video.Video_Actors FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n' CHARACTER SET latin1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for theright syntax to use near 'CHARACTER SET latin1' at line 1
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Actors.txt' into table video.Video_Actors CHARACTER SET latin1 FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+Query OK, 0 rows affected, 372 warnings (0.01 sec)
+Records: 372  Deleted: 0  Skipped: 372  Warnings: 372
+
+mysql> show warnings;
++---------+------+-----------------------------------------------------------------------+
+| Level   | Code | Message                                                               |
++---------+------+-----------------------------------------------------------------------+
+| Warning | 1062 | Duplicate entry 'Marlon Brando' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Martin Sheen' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Robert Duvall' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Frederic Forrest' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Dennis Hopper' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Scott Glenn' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Harrison Ford' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Laurence Fishburne' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Sam Bottoms' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Will Smith' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Martin Lawrence' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Tea Leoni' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Theresa Randle' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Tcheky Karyo' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Joe Pantoliano' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Lisa Boyle' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Mel Gibson' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Patrick McGoohan' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Sophie Marceau' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Catherine McCormack' for key 'video_actors.PRIMARY'  |
+| Warning | 1062 | Duplicate entry 'Robert Duvall' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Tea Leoni' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Morgan Freeman' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Rudy Ray Moore' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Carol Speed' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Jerry Jones' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Lady Reed' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Jimmy Lynch' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Matthew Modine' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Adam Baldwin' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'R. Lee Erney' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Ed O`Ross' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Arliss Howard' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Dorian Harewood' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Kevyn Major Howard' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Vincent D`Onofrio' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Will Smith' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Jeff Goldblum' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Bill Pullman' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Margaret Colin' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Judd Hirsch' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Randy Quaid' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Vivica A. Fox' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Mary McDonnell' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'James Rebhorn' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Harvey Fierstein' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Robert Loggia' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Harry Connick Jr.' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Sean Connery' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Alec Baldwin' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Scott Glenn' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'James Earl Jones' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Sam Neill' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Tim Curry' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Nicolas Cage' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Sean Connery' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Ed Harris' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Michael Biehn' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'William Forsythe' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'David Morse' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'John C. McGinley' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Bokeem Woodbine' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Vanessa Marcil' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Claire Forlani' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Tom Cruise' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Kelly McGillis' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Anthony Edwards' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Val Kilmer' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Tim Robbins' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Meg Ryan' for key 'video_actors.PRIMARY'             |
+| Warning | 1062 | Duplicate entry 'Tom Skerritt' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Whip Hubley' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Michael Ironside' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Rick Rossovich' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'John Stockwell' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Barry Tubb' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'James Tolkan' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Adrian Pasdar' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Mike Myers' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Elizabeth Hurley' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Michael York' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Mimi Rogers' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Robert Wagner' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Seth Green' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Fabiana Udenio' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Mindy Sterling' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Paul Dillon' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Chevy Chase' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Rodney Dangerfield' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Bill Murray' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Michael O`Keefe' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Ted Knight' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Richard Pryor' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Irwin Corey' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Ivan Dixon' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Tracy Reed' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Richard Brestoff' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Bill Duke' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Sully Boyar' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Antonio Fargas' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'George Carlin' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Melanie Mayron' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Alfre Woodard' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Delroy Lindo' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'David Patrick Kelly' for key 'video_actors.PRIMARY'  |
+| Warning | 1062 | Duplicate entry 'Zelda Harris' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Spike Lee' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Joie Lee' for key 'video_actors.PRIMARY'             |
+| Warning | 1062 | Duplicate entry 'RuPaul' for key 'video_actors.PRIMARY'               |
+| Warning | 1062 | Duplicate entry 'Jose Zuniga' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Rudy Ray Moore' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Jerry Jones' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Lady Reed' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Jim Carrey' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Jeff Daniels' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Lauren Holly' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Karen Duffy' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Mike Starr' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Charles Rocket' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Teri Garr' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Monty Python' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Graham Chapman' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Terry Gilliam' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Connie Booth' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Carol Cleveland' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Bee Duffell' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'John Young' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Terry Jones' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Robin Williams' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Sally Field' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Pierce Brosnan' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Harvey Fierstein' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Robert Prosky' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Mara Wilson' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'John Belushi' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Dan Aykroyd' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'James Brown' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Cab Colloway' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Ray Charles' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Kathleen Freeman' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Carrie Fisher' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Henry Gibson' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Steven Spielberg' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Eddie Murphy' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Jada Pinkett-Smith' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'John Ales' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Jamal Mixon' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'James Coburn' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Sean Penn' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Timothy Hutton' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Lori Singer' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Pat Hingle' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Jennifer Runyon' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Tom Hanks' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Robin Wright' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Gary Sinise' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Mykelti Williamson' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Sally Field' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Patrick Swayze' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Demi Moore' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Whoopi Goldberg' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Vincent Schiavelli' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Rick Aviles' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Vivien Leigh' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Clark Gable' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Olivia de Havilland' for key 'video_actors.PRIMARY'  |
+| Warning | 1062 | Duplicate entry 'Hattie McDaniel' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Leslie Howard' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Thomas Mitchell' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Barbara O`Neil' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Robin Williams' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Matt Damon' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Ben Affleck' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Minnie Driver' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Stellan Skarsgard' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Casey Affleck' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Cole Hauser' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'John Mighton' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Janet Jackson' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Tupac Shakur' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Tyra Ferrell' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Regina King' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Joe Torry' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Roger Guenveur Smith' for key 'video_actors.PRIMARY' |
+| Warning | 1062 | Duplicate entry 'Sean Astin' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Ned Beatty' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Charles S. Dutton' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Lili Taylor' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Tim Robbins' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Morgan Freeman' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Bob Gunton' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'William Sadler' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'James Whitmore' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Gil Bellows' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Vanessa Williams' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Vivica Fox' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Nia Long' for key 'video_actors.PRIMARY'             |
+| Warning | 1062 | Duplicate entry 'Irma Hall' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Michael Beach' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Leonardo Di Caprio' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Kate Winslet' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Billy Zane' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Kathy Bates' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Frances Fisher' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Bernard Hill' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Jonathan Hyde' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Danny Nucci' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'David Warner' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Virginia Madsen' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Tony Todd' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Vanessa Williams' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Xander Berkeley' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Kasi Lemmons' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Sissy Spacek' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'John Travolta' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'William Katt' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Nancy Allen' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Piper Laurie' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Amy Irving' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Betty Buckley' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'P. J. Soles' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Sydney Lassick' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Stefan Gierasch' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Adrienne King' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Betsy Palmer' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Kevin Bacon' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Jason (sh...sh...sh)' for key 'video_actors.PRIMARY' |
+| Warning | 1062 | Duplicate entry 'Kathy Bates' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'James Caan' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Richard Farnsworth' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Frances Sternhagen' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Lauren Bacall' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Fred Gwyne' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Dale Midkiff' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Denise Crosby' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Miko Hughes' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Craig T. Nelson' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Dominique Dunne' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Oliver Robbins' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Heather O`Rourke' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'JoBeth Williams' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Anthony Perkins' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Janet Leigh' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Martin Balsam' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Vera Miles' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'John Gavin' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'John McIntire' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Simon Oakland' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Vaughn Taylor' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Neve Campbell' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Drew Barrymore' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Courtney Cox' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Skeet Ulrich' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'David Arquette' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Matthew Lillard' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Rose McGowan' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Linda Blair' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Henry Winkler' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Joseph Whipp' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Frances Lee McCain' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Liev Screiber' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Tom Skerrit' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Sigourney Weaver' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Ian Holm' for key 'video_actors.PRIMARY'             |
+| Warning | 1062 | Duplicate entry 'John Hurt' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Harry Dean Stanton' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Veronica Cartwright' for key 'video_actors.PRIMARY'  |
+| Warning | 1062 | Duplicate entry 'Yaphet Kotto' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Malcolm McDowell' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Patrick Magee' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Adrienne Corri' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Aubrey Morris' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'James Marcus' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Michael Bates' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Warren Clark' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Carl Duering' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'John Clive' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Jodie Foster' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Matthew McConaughey' for key 'video_actors.PRIMARY'  |
+| Warning | 1062 | Duplicate entry 'James Woods' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'John Hurt' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Tom Skerritt' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Angela Bassett' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Rob Lowe' for key 'video_actors.PRIMARY'             |
+| Warning | 1062 | Duplicate entry 'William Fichtner' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Geoffrey Blake' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Jena Malone' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Kyle MacLachlan' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'José Ferrer' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Dean Stockwell' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Brad Dourif' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Sting' for key 'video_actors.PRIMARY'                |
+| Warning | 1062 | Duplicate entry 'Kenneth McMillan' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Patrick Stewart' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Sean Young' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Linda Hunt' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Jack Nance' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Nicol Williamson' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Nigel Terry' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Helen Mirren' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Cherie Lunghi' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Nicholas Clay' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Liam Neeson' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Sam Neill' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Laura Dern' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Richard Attenborough' for key 'video_actors.PRIMARY' |
+| Warning | 1062 | Duplicate entry 'Jeff Goldblum' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Samuel L. Jackson' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Patrick Stewart' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'James Cromwell' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Alice Krige' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Brent Spiner' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Patti Yasutake' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'LeVar Burton' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Michael Dorn' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Gates McFadden' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Mark Hamill' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Carrie Fisher' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Harrison Ford' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Alec Guinness' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Anthony Daniels' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Jeff Bridges' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'David Warner' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Bruce Boxleitner' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Cindy Morgan' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Barnard Hughes' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Dan Shor' for key 'video_actors.PRIMARY'             |
+| Warning | 1062 | Duplicate entry 'Sharon Stone' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Chazz Palminteri' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Isabelle Adjani' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Kathy Bates' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Michael Douglas' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Demi Moore' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Donald Sutherland' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Caroline Goodall' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Dennis Miller' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Alec Baldwin' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Nicole Kidman' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Bill Pullman' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Peter Gallagher' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Joser Sommer' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Bebe Neuwirth' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Anne Bancroft' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'George C. Scott' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Brad Pitt' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Morgan Freeman' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Gwyneth Paltrow' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Kevin Spacey' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Tom Cruise' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Jeanne Tripplehorn' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Ed Harris' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Holly Hunter' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'David Strathairn' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Gary Busey' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Michael Douglas' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Sean Penn' for key 'video_actors.PRIMARY'            |
+| Warning | 1062 | Duplicate entry 'Deborah Kara Unger' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'James Rebhorn' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Anna Katerina' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Peter Donat' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Jodie Foster' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Anthony Hopkins' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Scott Glenn' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Ted Levine' for key 'video_actors.PRIMARY'           |
+| Warning | 1062 | Duplicate entry 'Diane Baker' for key 'video_actors.PRIMARY'          |
+| Warning | 1062 | Duplicate entry 'Brooke Smith' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Gabriel Byrne' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Kevin Spacey' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Stephen Baldwin' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Chazz Palminteri' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Kevin Pollak' for key 'video_actors.PRIMARY'         |
+| Warning | 1062 | Duplicate entry 'Benicio Del Toro' for key 'video_actors.PRIMARY'     |
++---------+------+-----------------------------------------------------------------------+
+372 rows in set (0.00 sec)
+
+mysql> drop table video.Video_Actors;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SELECT * FROM video.Video_Actors;
+ERROR 1146 (42S02): Table 'video.video_actors' doesn't exist
+mysql> Load Data local Infile 'C:/Users/arneyh/OneDrive - Milwaukee School of Engineering/CSC 3320 - Databases/Labs/Lab 3/videodb2022/Video_Actors.txt' into table video.Video_Actors CHARACTER SET latin1 FIELDS TERMINATED BY '\t' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\r\n';
+Query OK, 335 rows affected, 37 warnings (0.03 sec)
+Records: 372  Deleted: 0  Skipped: 37  Warnings: 37
+
+mysql> show warnings;
++---------+------+-------------------------------------------------------------------+
+| Level   | Code | Message                                                           |
++---------+------+-------------------------------------------------------------------+
+| Warning | 1062 | Duplicate entry 'Robert Duvall' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Tea Leoni' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Will Smith' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Scott Glenn' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Sean Connery' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Rudy Ray Moore' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Jerry Jones' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Lady Reed' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Harvey Fierstein' for key 'video_actors.PRIMARY' |
+| Warning | 1062 | Duplicate entry 'Sally Field' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Robin Williams' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Tim Robbins' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Morgan Freeman' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Vanessa Williams' for key 'video_actors.PRIMARY' |
+| Warning | 1062 | Duplicate entry 'Kathy Bates' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'John Hurt' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Tom Skerritt' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Sam Neill' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Jeff Goldblum' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Patrick Stewart' for key 'video_actors.PRIMARY'  |
+| Warning | 1062 | Duplicate entry 'Carrie Fisher' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Harrison Ford' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'David Warner' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Kathy Bates' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Demi Moore' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Alec Baldwin' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Bill Pullman' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Morgan Freeman' for key 'video_actors.PRIMARY'   |
+| Warning | 1062 | Duplicate entry 'Tom Cruise' for key 'video_actors.PRIMARY'       |
+| Warning | 1062 | Duplicate entry 'Ed Harris' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'Michael Douglas' for key 'video_actors.PRIMARY'  |
+| Warning | 1062 | Duplicate entry 'Sean Penn' for key 'video_actors.PRIMARY'        |
+| Warning | 1062 | Duplicate entry 'James Rebhorn' for key 'video_actors.PRIMARY'    |
+| Warning | 1062 | Duplicate entry 'Jodie Foster' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Scott Glenn' for key 'video_actors.PRIMARY'      |
+| Warning | 1062 | Duplicate entry 'Kevin Spacey' for key 'video_actors.PRIMARY'     |
+| Warning | 1062 | Duplicate entry 'Chazz Palminteri' for key 'video_actors.PRIMARY' |
++---------+------+-------------------------------------------------------------------+
+37 rows in set (0.00 sec)
+
+mysql>
